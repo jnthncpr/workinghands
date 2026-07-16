@@ -96,3 +96,74 @@ html, body {
   opacity: 0.3;
   pointer-events: none;
 }
+
+.ant-dance {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.ant-dance__ants {
+  display: flex;
+  gap: 40px;
+  align-items: flex-end;
+  height: 35%;
+}
+
+.ant-dance__ant {
+  height: 100%;
+}
+
+.ant-dance__ant svg {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+.ant-dance__keyboard {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  height: 45%;
+}
+
+.ant-dance__naturals {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 2px;
+}
+
+.ant-dance__key {
+  touch-action: none;
+}
+
+.ant-dance__key--natural {
+  flex: 1;
+}
+
+.ant-dance__key--natural svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.ant-dance__key--sharp {
+  position: absolute;
+  top: 0;
+  width: calc(100% / 7 * 0.6);
+  height: 65%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.ant-dance__key--sharp svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
