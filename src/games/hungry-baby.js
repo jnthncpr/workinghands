@@ -19,7 +19,10 @@ export class HungryBaby {
     this.mouthOpen = false;
     this.fedCount = 0;
     this.unbindFns = [];
-    this.resizeBaby = () => this.sizeBaby();
+    this.resizeHandler = () => {
+      this.sizeBaby();
+      this.positionCaption();
+    };
   }
 
   async mount() {
@@ -28,6 +31,7 @@ export class HungryBaby {
     const foodsRow = document.createElement('div');
     foodsRow.className = 'hungry-baby__foods';
     this.container.appendChild(foodsRow);
+    this.foodsRow = foodsRow;
 
     for (const food of FOODS) {
       const slot = document.createElement('div');
@@ -38,6 +42,12 @@ export class HungryBaby {
       await loadInlineSVG(food.path, slot);
       this.bindFood(slot);
     }
+
+    const caption = document.createElement('p');
+    caption.className = 'hungry-baby__caption';
+    caption.textContent = "feed the baby! he's hungry!";
+    this.container.appendChild(caption);
+    this.caption = caption;
 
     const baby = document.createElement('div');
     baby.className = 'hungry-baby__baby';
@@ -66,7 +76,8 @@ export class HungryBaby {
     this.unbindFns.push(unbindPress);
 
     this.sizeBaby();
-    window.addEventListener('resize', this.resizeBaby);
+    this.positionCaption();
+    window.addEventListener('resize', this.resizeHandler);
   }
 
   // baby-visual layers are position:absolute (so toggling which is visible
@@ -77,6 +88,18 @@ export class HungryBaby {
   sizeBaby() {
     const width = this.baby.getBoundingClientRect().width;
     this.baby.style.height = `${width * (BABY_VIEWBOX.height / BABY_VIEWBOX.width)}px`;
+  }
+
+  // Positions the caption at the exact vertical midpoint between the foods
+  // row and the baby, measured directly rather than assumed, since both are
+  // independently positioned (foods pinned near the top, baby pinned to the
+  // bottom) and the gap between them varies with viewport height.
+  positionCaption() {
+    const foodsBottom = this.foodsRow.getBoundingClientRect().bottom;
+    const babyTop = this.baby.getBoundingClientRect().top;
+    const containerTop = this.container.getBoundingClientRect().top;
+    const midpoint = (foodsBottom + babyTop) / 2 - containerTop;
+    this.caption.style.top = `${midpoint}px`;
   }
 
   setMouthOpen(open) {
@@ -139,7 +162,7 @@ export class HungryBaby {
   }
 
   destroy() {
-    window.removeEventListener('resize', this.resizeBaby);
+    window.removeEventListener('resize', this.resizeHandler);
     for (const unbind of this.unbindFns) unbind();
   }
 }

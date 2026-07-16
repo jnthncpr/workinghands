@@ -258,6 +258,17 @@ html, body {
   overflow: hidden;
 }
 
+.hungry-baby__caption {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font: 24px Arial, sans-serif;
+  text-align: center;
+  color: #fdf3be;
+  white-space: nowrap;
+}
+
 .hungry-baby__foods {
   position: absolute;
   top: 40px;
