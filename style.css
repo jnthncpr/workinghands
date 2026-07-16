@@ -108,17 +108,20 @@ html, body {
   gap: clamp(12px, 4vw, 40px);
   width: 75%;
   max-width: 75%;
+  height: 180px; /* fixed so per-frame aspect-ratio differences can't ripple into the caption's layout */
 }
 
 .ant-dance__ant {
   flex: 1 1 0;
   min-width: 0;
+  height: 100%;
   display: flex;
+  align-items: flex-end;
   justify-content: center;
 }
 
 .ant-dance__ant svg {
-  max-height: 180px;
+  max-height: 100%;
   max-width: 100%;
   width: auto;
   height: auto;
@@ -184,4 +187,46 @@ html, body {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.post-screen {
+  position: absolute;
+  inset: 0;
+  background: var(--post-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  text-align: center;
+  color: #fdf3be;
+  box-sizing: border-box;
+  padding: 40px;
+}
+
+.post-screen__icon {
+  font-size: 120px;
+  line-height: 1;
+}
+
+.post-screen__message {
+  margin: 0;
+  font: 24px Arial, sans-serif;
+}
+
+.post-screen__next {
+  margin-top: 16px;
+  padding: 16px 48px;
+  border: 3px solid #fdf3be;
+  border-radius: 999px;
+  background: none;
+  color: #fdf3be;
+  font: 700 28px Arial, sans-serif;
+  cursor: pointer;
+}
+
+.post-screen__next:hover,
+.post-screen__next:active {
+  background: #fdf3be;
+  color: var(--post-bg);
 }

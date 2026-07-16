@@ -17,6 +17,20 @@ const skipButton = nav.querySelector('[data-action="skip"]');
 backButton.textContent = 'back';
 skipButton.textContent = 'skip';
 
+// iOS Safari only unlocks Web Audio inside the call stack of a genuine user
+// gesture. Doing this on the very first touch anywhere (rather than lazily
+// inside each game's first note) gives the browser the earliest, most
+// direct gesture to unlock against.
+document.addEventListener(
+  'pointerdown',
+  () => {
+    if (typeof Tone !== 'undefined' && Tone.context.state !== 'running') {
+      Tone.start();
+    }
+  },
+  { once: true }
+);
+
 await loadInlineSVG('Assets/SVG/home_play.svg', playButton);
 
 const sequencer = new Sequencer({

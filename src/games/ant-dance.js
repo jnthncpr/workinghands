@@ -3,6 +3,11 @@ import { ChordSynth } from '../audio.js';
 import { bindPressZone } from '../gesture.js';
 import { ComboTimer } from '../combo-timer.js';
 import { FrameCycler } from '../frame-cycle.js';
+import { showPostScreen } from '../post-screen.js';
+
+const POST_BACKGROUND = '#533ed6'; // best estimate from mockup — adjust if off
+const POST_ICON = '\u{1F919}'; // placeholder emoji until the outlined SVG lands in Assets/SVG
+const POST_MESSAGE = 'great work! you ruined the picnic!';
 
 const NATURALS = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
 const SHARPS = [
@@ -35,8 +40,27 @@ export class AntDance {
       winMs: WIN_MS,
       onSustainStart: () => this.dancers.start(),
       onSustainEnd: () => this.dancers.stop(),
-      onWin: () => this.onComplete(),
+      onWin: () => this.showPost(),
     });
+  }
+
+  showPost() {
+    this.stopDancing();
+    for (const unbind of this.unbindFns) unbind();
+    this.unbindFns = [];
+    this.synth.releaseAll();
+
+    this.container.classList.remove('ant-dance');
+    showPostScreen(this.container, {
+      background: POST_BACKGROUND,
+      icon: POST_ICON,
+      message: POST_MESSAGE,
+      onNext: () => this.onComplete(),
+    });
+  }
+
+  stopDancing() {
+    this.dancers?.stop();
   }
 
   async mount() {
