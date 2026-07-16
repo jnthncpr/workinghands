@@ -5,8 +5,8 @@ import { ComboTimer } from '../combo-timer.js';
 import { FrameCycler } from '../frame-cycle.js';
 import { showPostScreen } from '../post-screen.js';
 
-const POST_BACKGROUND = '#533ed6'; // best estimate from mockup — adjust if off
-const POST_ICON = '\u{1F919}'; // placeholder emoji until the outlined SVG lands in Assets/SVG
+const POST_BACKGROUND = '#533ed6';
+const POST_ICON = '\u{1F919}';
 const POST_MESSAGE = 'great work! you ruined the picnic!';
 
 const NATURALS = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
@@ -34,6 +34,7 @@ export class AntDance {
     this.heldNotes = new Set();
     this.unbindFns = [];
     this.dancers = null;
+    this.postCleanup = null;
 
     this.combo = new ComboTimer({
       graceMs: GRACE_MS,
@@ -51,7 +52,7 @@ export class AntDance {
     this.synth.releaseAll();
 
     this.container.classList.remove('ant-dance');
-    showPostScreen(this.container, {
+    this.postCleanup = showPostScreen(this.container, {
       background: POST_BACKGROUND,
       icon: POST_ICON,
       message: POST_MESSAGE,
@@ -153,6 +154,7 @@ export class AntDance {
     this.dancers?.stop();
     this.combo.destroy();
     this.synth.releaseAll();
+    this.postCleanup?.();
     for (const unbind of this.unbindFns) unbind();
   }
 }
