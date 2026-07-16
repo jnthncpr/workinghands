@@ -2,23 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Working Hands</title>
-<style>
-  html, body {
-    margin: 0;
-    height: 100%;
-    background: #fdf6e3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: -apple-system, sans-serif;
-    color: #333;
-    touch-action: none;
-  }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Working Hands — deploy check</h1>
+  <div id="home">
+    <h1>WORKING HANDS</h1>
+    <p>a minigame to get your hands in tiptop shape</p>
+    <button id="play-button" aria-label="Play"></button>
+  </div>
+
+  <div id="stage" hidden></div>
+
+  <nav id="nav" hidden>
+    <button data-action="back" aria-label="Back" disabled></button>
+    <button data-action="skip" aria-label="Skip"></button>
+  </nav>
+
+  <script type="module" src="src/main.js"></script>
 </body>
 </html>

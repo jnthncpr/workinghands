@@ -1,0 +1,98 @@
+:root {
+  --nav-margin: 20px;
+  --nav-size: 64px;
+}
+
+@media (max-width: 428px) {
+  :root {
+    --nav-margin: 12px;
+    --nav-size: 44px;
+  }
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #eb4125;
+  font-family: -apple-system, sans-serif;
+  color: #fdf3be;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+#home, #stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#home[hidden], #stage[hidden], #nav[hidden] {
+  display: none;
+}
+
+#play-button {
+  margin-top: 24px;
+  width: 200px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+#play-button svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#nav {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#nav button {
+  position: absolute;
+  bottom: var(--nav-margin);
+  width: var(--nav-size);
+  height: var(--nav-size);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+#nav button svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#nav [data-action="back"] {
+  left: var(--nav-margin);
+  width: auto;
+  padding: 0 20px;
+  border: 3px solid #fdf3be;
+  border-radius: 999px;
+  color: #fdf3be;
+  font: 700 18px -apple-system, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#nav [data-action="skip"] {
+  right: var(--nav-margin);
+}
+
+#nav button:disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
