@@ -8,6 +8,7 @@ import { showPostScreen } from '../post-screen.js';
 const POST_BACKGROUND = '#533ed6';
 const POST_ICON = '\u{1F919}';
 const POST_MESSAGE = 'great work! you ruined the picnic!';
+const POST_NEXT_ACTIVE_ICON = 'Assets/SVG/next_active_purple.svg';
 
 const NATURALS = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
 const SHARPS = [
@@ -56,6 +57,7 @@ export class AntDance {
       background: POST_BACKGROUND,
       icon: POST_ICON,
       message: POST_MESSAGE,
+      nextActiveIcon: POST_NEXT_ACTIVE_ICON,
       onNext: () => this.onComplete(),
     });
   }

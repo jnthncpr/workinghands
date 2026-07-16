@@ -1,6 +1,12 @@
 import { loadInlineSVG } from '../svg-loader.js';
 import { bindPressZone } from '../gesture.js';
 import { bindDraggable } from '../drag.js';
+import { showPostScreen } from '../post-screen.js';
+
+const POST_BACKGROUND = '#56bd7e';
+const POST_ICON = '\u{1F44C}';
+const POST_MESSAGE = 'nice job! you spoil him!';
+const POST_NEXT_ACTIVE_ICON = 'Assets/SVG/next_active_green.svg';
 
 const BABY_VIEWBOX = { width: 384, height: 388.92 };
 
@@ -20,6 +26,7 @@ export class HungryBaby {
     this.mouthOpen = false;
     this.fedCount = 0;
     this.unbindFns = [];
+    this.postCleanup = null;
     this.resizeHandler = () => {
       this.sizeBaby();
       this.positionCaption();
@@ -158,12 +165,28 @@ export class HungryBaby {
 
     this.fedCount++;
     if (this.fedCount >= FOODS.length) {
-      this.onComplete();
+      this.showPost();
     }
+  }
+
+  showPost() {
+    window.removeEventListener('resize', this.resizeHandler);
+    for (const unbind of this.unbindFns) unbind();
+    this.unbindFns = [];
+
+    this.container.classList.remove('hungry-baby');
+    this.postCleanup = showPostScreen(this.container, {
+      background: POST_BACKGROUND,
+      icon: POST_ICON,
+      message: POST_MESSAGE,
+      nextActiveIcon: POST_NEXT_ACTIVE_ICON,
+      onNext: () => this.onComplete(),
+    });
   }
 
   destroy() {
     window.removeEventListener('resize', this.resizeHandler);
+    this.postCleanup?.();
     for (const unbind of this.unbindFns) unbind();
   }
 }
