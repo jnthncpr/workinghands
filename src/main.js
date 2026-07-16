@@ -1,5 +1,5 @@
 import { Sequencer } from './sequencer.js';
-import { loadInlineSVG, replaceInlineSVG } from './svg-loader.js';
+import { loadInlineSVG } from './svg-loader.js';
 import { AntDance } from './games/ant-dance.js';
 import { HungryBaby } from './games/hungry-baby.js';
 import { BearScratch } from './games/bear-scratch.js';
@@ -47,17 +47,32 @@ document.addEventListener(
   { passive: false }
 );
 
-const PLAY_REST = 'Assets/SVG/home_play.svg';
-const PLAY_ACTIVE = 'Assets/SVG/home_play_active.svg';
+// Both states load once as stacked layers, toggled via display — swapping
+// the button's DOM content on every hover/press (e.g. via innerHTML
+// replacement) was breaking the browser's native click dispatch on desktop,
+// since mousedown/mouseup need to resolve to a stable target across the
+// interaction.
+const playRest = document.createElement('div');
+playRest.className = 'play-visual';
+playButton.appendChild(playRest);
+await loadInlineSVG('Assets/SVG/home_play.svg', playRest);
 
-await loadInlineSVG(PLAY_REST, playButton);
+const playActive = document.createElement('div');
+playActive.className = 'play-visual play-visual--overlay';
+playButton.appendChild(playActive);
+await loadInlineSVG('Assets/SVG/home_play_active.svg', playActive);
 
-const setPlayVisual = (path) => replaceInlineSVG(path, playButton);
-playButton.addEventListener('pointerenter', () => setPlayVisual(PLAY_ACTIVE));
-playButton.addEventListener('pointerdown', () => setPlayVisual(PLAY_ACTIVE));
-playButton.addEventListener('pointerleave', () => setPlayVisual(PLAY_REST));
-playButton.addEventListener('pointerup', () => setPlayVisual(PLAY_REST));
-playButton.addEventListener('pointercancel', () => setPlayVisual(PLAY_REST));
+const setPlayActive = (active) => {
+  playRest.style.display = active ? 'none' : '';
+  playActive.style.display = active ? '' : 'none';
+};
+setPlayActive(false);
+
+playButton.addEventListener('pointerenter', () => setPlayActive(true));
+playButton.addEventListener('pointerdown', () => setPlayActive(true));
+playButton.addEventListener('pointerleave', () => setPlayActive(false));
+playButton.addEventListener('pointerup', () => setPlayActive(false));
+playButton.addEventListener('pointercancel', () => setPlayActive(false));
 
 const sequencer = new Sequencer({
   stage,
