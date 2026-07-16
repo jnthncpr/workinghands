@@ -32,6 +32,10 @@ html, body {
   text-align: center;
 }
 
+#home h1 {
+  font-family: 'Bungee', -apple-system, sans-serif;
+}
+
 #home[hidden], #stage[hidden], #nav[hidden] {
   display: none;
 }
