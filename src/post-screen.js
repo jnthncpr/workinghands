@@ -39,10 +39,10 @@ export function showPostScreen(container, { background, icon, message, nextActiv
   nextButton.className = 'post-screen__next';
   screen.appendChild(nextButton);
 
-  const nextRest = document.createElement('span');
+  const nextRest = document.createElement('div');
   nextRest.className = 'post-screen__next-rest';
-  nextRest.textContent = 'next';
   nextButton.appendChild(nextRest);
+  loadInlineSVG('Assets/SVG/next.svg', nextRest);
 
   const nextActive = document.createElement('div');
   nextActive.className = 'post-screen__next-active';
