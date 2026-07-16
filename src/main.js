@@ -14,13 +14,10 @@ const playButton = document.getElementById('play-button');
 const backButton = nav.querySelector('[data-action="back"]');
 const skipButton = nav.querySelector('[data-action="skip"]');
 
-// no dedicated "back" icon asset yet — using a plain text pill as a placeholder
 backButton.textContent = 'back';
+skipButton.textContent = 'skip';
 
-await Promise.all([
-  loadInlineSVG('Assets/SVG/home_play.svg', playButton),
-  loadInlineSVG('Assets/SVG/next.svg', skipButton),
-]);
+await loadInlineSVG('Assets/SVG/home_play.svg', playButton);
 
 const sequencer = new Sequencer({
   stage,

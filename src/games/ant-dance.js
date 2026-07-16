@@ -61,6 +61,11 @@ export class AntDance {
       intervalMs: DANCE_FRAME_MS,
     });
 
+    const caption = document.createElement('p');
+    caption.className = 'ant-dance__caption';
+    caption.textContent = 'make the ants dance!';
+    this.container.appendChild(caption);
+
     const keyboard = document.createElement('div');
     keyboard.className = 'ant-dance__keyboard';
     this.container.appendChild(keyboard);
@@ -73,8 +78,9 @@ export class AntDance {
       const slot = document.createElement('div');
       slot.className = 'ant-dance__key ant-dance__key--natural';
       naturalsRow.appendChild(slot);
-      const root = await loadInlineSVG('Assets/SVG/key.svg', slot);
-      this.bindKey(slot, root, note, false);
+      const stateIds = ['key_inactive', 'key_active'];
+      const root = await loadInlineSVG('Assets/SVG/key.svg', slot, { states: stateIds, initial: stateIds[0] });
+      this.bindKey(slot, root, note, stateIds);
     }
 
     for (const { note, afterIndex } of SHARPS) {
@@ -82,15 +88,13 @@ export class AntDance {
       slot.className = 'ant-dance__key ant-dance__key--sharp';
       slot.style.left = `${((afterIndex + 1) / NATURALS.length) * 100}%`;
       keyboard.appendChild(slot);
-      const root = await loadInlineSVG('Assets/SVG/key_sharp.svg', slot);
-      this.bindKey(slot, root, note, true);
+      const stateIds = ['key_sharp_inactive', 'key_sharp_active'];
+      const root = await loadInlineSVG('Assets/SVG/key_sharp.svg', slot, { states: stateIds, initial: stateIds[0] });
+      this.bindKey(slot, root, note, stateIds);
     }
   }
 
-  bindKey(slot, svgRoot, note, isSharp) {
-    const stateIds = isSharp
-      ? ['key_sharp_inactive', 'key_sharp_active']
-      : ['key_inactive', 'key_active'];
+  bindKey(slot, svgRoot, note, stateIds) {
     const [inactiveId, activeId] = stateIds;
 
     const unbind = bindPressZone(slot, {

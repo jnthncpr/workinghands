@@ -29,10 +29,18 @@ function scopeStyles(root) {
   return root;
 }
 
-export async function loadInlineSVG(path, container) {
+// Illustrator/Figma exports of multi-state rigs don't hide their non-rest
+// groups by default (that's a manual per-asset step that's easy to miss), so
+// every group renders stacked on top of each other until told otherwise.
+// Passing { states, initial } establishes a clean single-state render as
+// soon as the SVG lands, instead of leaving that as a separate call site can
+// forget to make.
+export async function loadInlineSVG(path, container, { states, initial } = {}) {
   const markup = await fetchMarkup(path);
   container.insertAdjacentHTML('beforeend', markup);
-  return scopeStyles(container.lastElementChild);
+  const root = scopeStyles(container.lastElementChild);
+  if (states && initial) setState(root, states, initial);
+  return root;
 }
 
 export async function replaceInlineSVG(path, container) {
