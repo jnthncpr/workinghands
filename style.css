@@ -250,3 +250,76 @@ html, body {
   background: #fdf3be;
   color: var(--post-bg);
 }
+
+.hungry-baby {
+  position: absolute;
+  inset: 0;
+  background: #62d4d1; /* placeholder guess from the established palette — confirm actual color */
+  overflow: hidden;
+}
+
+.hungry-baby__foods {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: clamp(20px, 5vw, 48px);
+}
+
+@media (max-width: 400px) {
+  .hungry-baby__foods {
+    transform: scale(0.75);
+    transform-origin: top center;
+  }
+}
+
+@media (max-width: 340px) {
+  .hungry-baby__foods {
+    transform: scale(0.6);
+    transform-origin: top center;
+  }
+}
+
+.hungry-baby__food {
+  touch-action: none;
+  cursor: grab;
+  flex-shrink: 0;
+}
+
+.hungry-baby__food svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hungry-baby__baby {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: min(385px, 85%);
+  touch-action: none;
+}
+
+.baby-visual {
+  position: absolute;
+  inset: 0;
+}
+
+.baby-visual svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hungry-baby__mouth-zone {
+  position: absolute;
+  left: 48%;
+  top: 33%;
+  width: 45%;
+  height: 35%;
+  transform: translate(-50%, -50%);
+}
