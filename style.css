@@ -254,7 +254,7 @@ html, body {
 .hungry-baby {
   position: absolute;
   inset: 0;
-  background: #62d4d1; /* placeholder guess from the established palette — confirm actual color */
+  background: #2e6bf6;
   overflow: hidden;
 }
 
