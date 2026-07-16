@@ -44,21 +44,22 @@ html, body {
   position: relative;
   margin-top: 24px;
   width: 200px;
+  height: 117px; /* fixed to home_play.svg's 247.62:144.97 ratio at 200px wide, so toggling which layer is visible can never change the button's box and reflow the page */
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
 }
 
-.play-visual svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.play-visual--overlay {
+.play-visual {
   position: absolute;
   inset: 0;
+}
+
+.play-visual svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 #nav {
@@ -155,6 +156,15 @@ html, body {
   height: var(--keyboard-height);
   background: #2e6bf6;
   box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .ant-dance__keyboard-bar {
+    left: 50%;
+    right: auto;
+    width: 1024px;
+    transform: translateX(-50%);
+  }
 }
 
 .ant-dance__keyboard {

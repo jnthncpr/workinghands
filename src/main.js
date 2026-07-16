@@ -58,7 +58,7 @@ playButton.appendChild(playRest);
 await loadInlineSVG('Assets/SVG/home_play.svg', playRest);
 
 const playActive = document.createElement('div');
-playActive.className = 'play-visual play-visual--overlay';
+playActive.className = 'play-visual';
 playButton.appendChild(playActive);
 await loadInlineSVG('Assets/SVG/home_play_active.svg', playActive);
 
