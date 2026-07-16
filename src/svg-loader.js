@@ -7,19 +7,43 @@ function fetchMarkup(path) {
   return markupCache.get(path);
 }
 
+// Parses simple flat "selector { prop: value; ... }" blocks directly from
+// CSS text. Deliberately not using styleEl.sheet.cssRules here: older WebKit
+// (confirmed on iOS 15 / iPad Air 2) doesn't reliably populate a freshly
+// inserted <style> tag's CSSOM synchronously, so reading .sheet right after
+// insertion can silently see nothing there — and since the style tag gets
+// removed regardless, that failure mode is silent (default black fills)
+// rather than a visible error. Text parsing has no such timing dependency.
+function parseFlatCSS(cssText) {
+  const rules = [];
+  const ruleRe = /([^{}]+)\{([^{}]*)\}/g;
+  let match;
+  while ((match = ruleRe.exec(cssText))) {
+    const selectors = match[1].trim();
+    const declarations = match[2]
+      .split(';')
+      .map((decl) => decl.trim())
+      .filter(Boolean)
+      .map((decl) => {
+        const i = decl.indexOf(':');
+        return [decl.slice(0, i).trim(), decl.slice(i + 1).trim()];
+      });
+    if (selectors && declarations.length) rules.push({ selectors, declarations });
+  }
+  return rules;
+}
+
 // Illustrator exports reuse generic class names (.cls-1, .cls-2, ...) across
 // files. Inlining several SVGs into one document makes their <style> blocks
 // collide globally, so bake each rule's declarations onto matching elements
 // as inline styles, then drop the <style> tag before it can leak further.
 function scopeStyles(root) {
   for (const styleEl of root.querySelectorAll('style')) {
-    const sheet = styleEl.sheet;
-    if (sheet) {
-      for (const rule of sheet.cssRules) {
-        if (!rule.style) continue;
-        for (const el of root.querySelectorAll(rule.selectorText)) {
-          for (const prop of rule.style) {
-            el.style.setProperty(prop, rule.style.getPropertyValue(prop));
+    for (const { selectors, declarations } of parseFlatCSS(styleEl.textContent)) {
+      for (const selector of selectors.split(',')) {
+        for (const el of root.querySelectorAll(selector.trim())) {
+          for (const [prop, value] of declarations) {
+            el.style.setProperty(prop, value);
           }
         }
       }

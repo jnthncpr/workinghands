@@ -1,5 +1,5 @@
 import { Sequencer } from './sequencer.js';
-import { loadInlineSVG } from './svg-loader.js';
+import { loadInlineSVG, replaceInlineSVG } from './svg-loader.js';
 import { AntDance } from './games/ant-dance.js';
 import { HungryBaby } from './games/hungry-baby.js';
 import { BearScratch } from './games/bear-scratch.js';
@@ -31,7 +31,33 @@ document.addEventListener(
   { once: true }
 );
 
-await loadInlineSVG('Assets/SVG/home_play.svg', playButton);
+// touch-action:none on html/body should already block double-tap-to-zoom,
+// but older Safari versions don't reliably honor that — this is a
+// belt-and-suspenders fallback using the classic fast-tap-detection pattern.
+let lastTouchEnd = 0;
+document.addEventListener(
+  'touchend',
+  (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  },
+  { passive: false }
+);
+
+const PLAY_REST = 'Assets/SVG/home_play.svg';
+const PLAY_ACTIVE = 'Assets/SVG/home_play_active.svg';
+
+await loadInlineSVG(PLAY_REST, playButton);
+
+const setPlayVisual = (path) => replaceInlineSVG(path, playButton);
+playButton.addEventListener('pointerenter', () => setPlayVisual(PLAY_ACTIVE));
+playButton.addEventListener('pointerdown', () => setPlayVisual(PLAY_ACTIVE));
+playButton.addEventListener('pointerleave', () => setPlayVisual(PLAY_REST));
+playButton.addEventListener('pointerup', () => setPlayVisual(PLAY_REST));
+playButton.addEventListener('pointercancel', () => setPlayVisual(PLAY_REST));
 
 const sequencer = new Sequencer({
   stage,

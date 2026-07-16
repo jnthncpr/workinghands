@@ -118,13 +118,13 @@ html, body {
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  overflow: hidden;
 }
 
 .ant-dance__ant svg {
-  max-height: 100%;
-  max-width: 100%;
+  height: 100%;
   width: auto;
-  height: auto;
+  max-width: 100%;
   display: block;
 }
 
