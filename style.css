@@ -85,38 +85,69 @@ html, body {
 .ant-dance {
   position: absolute;
   inset: 0;
+  background: #f6c744;
+  overflow: hidden;
+  --keyboard-height: clamp(220px, 32vh, 340px);
+}
+
+.ant-dance__content {
+  position: absolute;
+  inset: 0;
+  bottom: var(--keyboard-height);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  padding: 40px 20px;
+  padding: 40px 20px 0;
   box-sizing: border-box;
-  background: #f6c744;
 }
 
 .ant-dance__ants {
   display: flex;
-  gap: 40px;
+  justify-content: center;
+  align-items: flex-end;
+  gap: clamp(12px, 4vw, 40px);
+  width: 75%;
+  max-width: 75%;
+}
+
+.ant-dance__ant {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .ant-dance__ant svg {
-  height: 180px;
+  max-height: 180px;
+  max-width: 100%;
   width: auto;
+  height: auto;
   display: block;
 }
 
 .ant-dance__caption {
-  margin: 0;
+  margin-top: auto;
+  margin-bottom: auto;
   font: 24px Arial, sans-serif;
   text-align: center;
   color: #222;
 }
 
+.ant-dance__keyboard-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--keyboard-height);
+  background: #2e6bf6;
+  box-sizing: border-box;
+}
+
 .ant-dance__keyboard {
   position: relative;
   width: 100%;
-  max-width: 700px;
-  height: 45%;
+  height: 100%;
 }
 
 .ant-dance__naturals {

@@ -42,9 +42,13 @@ export class AntDance {
   async mount() {
     this.container.classList.add('ant-dance');
 
+    const content = document.createElement('div');
+    content.className = 'ant-dance__content';
+    this.container.appendChild(content);
+
     const antsRow = document.createElement('div');
     antsRow.className = 'ant-dance__ants';
-    this.container.appendChild(antsRow);
+    content.appendChild(antsRow);
 
     const antSlots = [];
     for (let i = 0; i < 3; i++) {
@@ -64,11 +68,15 @@ export class AntDance {
     const caption = document.createElement('p');
     caption.className = 'ant-dance__caption';
     caption.textContent = 'make the ants dance!';
-    this.container.appendChild(caption);
+    content.appendChild(caption);
+
+    const keyboardBar = document.createElement('div');
+    keyboardBar.className = 'ant-dance__keyboard-bar';
+    this.container.appendChild(keyboardBar);
 
     const keyboard = document.createElement('div');
     keyboard.className = 'ant-dance__keyboard';
-    this.container.appendChild(keyboard);
+    keyboardBar.appendChild(keyboard);
 
     const naturalsRow = document.createElement('div');
     naturalsRow.className = 'ant-dance__naturals';
