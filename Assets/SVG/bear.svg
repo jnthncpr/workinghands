@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704.07 774.61">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #eb4125;
+      }
+
+      .cls-2 {
+        fill: #f6c744;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g id="bear">
+      <g id="bear_angry">
+        <circle class="cls-2" cx="177.98" cy="183.69" r="177.98"/>
+        <circle class="cls-2" cx="44.5" cy="44.5" r="44.5"/>
+        <circle class="cls-2" cx="311.47" cy="44.5" r="44.5"/>
+        <circle class="cls-1" cx="90.07" cy="168.95" r="22.1"/>
+        <circle class="cls-1" cx="266.97" cy="168.95" r="22.1"/>
+        <rect class="cls-1" x="196.09" y="117.26" width="92.57" height="10" transform="translate(-27.91 147.48) rotate(-32.1)"/>
+        <rect class="cls-1" x="102.2" y="75.97" width="10" height="92.57" transform="translate(-53.33 148.11) rotate(-57.9)"/>
+      </g>
+      <g id="bear_happy">
+        <circle class="cls-2" cx="177.98" cy="183.69" r="177.98"/>
+        <circle class="cls-2" cx="44.5" cy="44.5" r="44.5"/>
+        <circle class="cls-2" cx="311.47" cy="44.5" r="44.5"/>
+        <path class="cls-1" d="M67.97,168.95c0-12.2,9.89-22.1,22.1-22.1s22.1,9.89,22.1,22.1h-44.2Z"/>
+        <path class="cls-1" d="M244.87,168.95c0-12.2,9.89-22.1,22.1-22.1s22.1,9.89,22.1,22.1h-44.2Z"/>
+      </g>
+      <path id="back" class="cls-2" d="M0,774.61C0,454.99,157.61,195.88,352.03,195.88s352.03,259.11,352.03,578.74H0Z"/>
+      <circle id="tail" class="cls-2" cx="618.4" cy="431.19" r="85.66"/>
+      <path id="foot" class="cls-1" d="M40.39,774.61h-10c0-25.47,15.18-48.29,38.68-58.14l41.4-17.34c16.69-6.99,29.07-21,33.97-38.42l25.94-92.34c.75-2.66,3.51-4.21,6.17-3.46h0c2.66.75,4.21,3.51,3.46,6.17l-25.94,92.34c-5.72,20.38-20.2,36.76-39.73,44.94l-41.4,17.34c-19.77,8.28-32.54,27.48-32.54,48.91Z"/>
+    </g>
+  </g>
+</svg>

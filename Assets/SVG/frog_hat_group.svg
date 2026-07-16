@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 166.09 163.92">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fdf3be;
+      }
+
+      .cls-2 {
+        fill: #050505;
+      }
+
+      .cls-3 {
+        fill: #2e6bf6;
+      }
+
+      .cls-4 {
+        fill: #56bd7e;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g id="frog_hat_grou">
+      <g id="frog">
+        <ellipse class="cls-4" cx="83.04" cy="102.13" rx="83.04" ry="61.78"/>
+        <circle class="cls-1" cx="24.59" cy="77.3" r="24.59"/>
+        <circle class="cls-2" cx="24.59" cy="77.3" r="18.05"/>
+        <circle class="cls-1" cx="141.5" cy="77.3" r="24.59"/>
+        <circle class="cls-2" cx="141.5" cy="77.3" r="18.05"/>
+        <rect class="cls-2" x="24.59" y="107.36" width="116.91" height="7.6" rx="3.8" ry="3.8"/>
+      </g>
+      <path id="frog_hat" class="cls-3" d="M153.07,32.9c-.88-4.05-4.88-6.61-8.92-5.73l-21.66,4.71C118.59,13.68,102.39,0,83.04,0s-35.54,13.68-39.45,31.88l-21.65-4.71c-4.04-.88-8.04,1.69-8.92,5.73-.88,4.05,1.69,8.04,5.73,8.92l27.72,6.03h73.15l27.72-6.03c4.05-.88,6.61-4.88,5.73-8.92Z"/>
+    </g>
+  </g>
+</svg>

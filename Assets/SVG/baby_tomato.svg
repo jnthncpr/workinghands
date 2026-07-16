@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126.18 104.32">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #eb4125;
+      }
+
+      .cls-2 {
+        fill: #56bd7e;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g id="baby_tomato">
+      <ellipse class="cls-1" cx="63.09" cy="55.07" rx="63.09" ry="49.25"/>
+      <polygon class="cls-2" points="77.47 10.46 83.49 26.85 63.09 13.43 42.69 26.85 48.71 10.46 30.34 0 95.84 0 77.47 10.46"/>
+    </g>
+  </g>
+</svg>

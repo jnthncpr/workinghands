@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 637.92 445.49">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #533ed6;
+      }
+
+      .cls-2 {
+        fill: #f6c744;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g id="smiley">
+      <ellipse id="circle" class="cls-2" cx="318.96" cy="222.74" rx="318.96" ry="222.74"/>
+      <g id="mouth">
+        <rect class="cls-1" x="52.91" y="252.98" width="20" height="68.28" transform="translate(-170.84 108.91) rotate(-40.32)"/>
+        <g>
+          <path class="cls-1" d="M566.52,292.39c-19.98-32.23-53.3-59.76-96.37-79.62-44.65-20.58-96.93-31.47-151.19-31.47s-106.53,10.88-151.19,31.47c-43.07,19.85-76.39,47.38-96.37,79.62l-17-10.54c45.39-73.23,149.23-120.54,264.56-120.54s219.16,47.32,264.55,120.54l-17,10.54Z"/>
+          <rect class="cls-1" x="540.88" y="277.12" width="68.28" height="20" transform="translate(-15.97 539.73) rotate(-49.68)"/>
+        </g>
+      </g>
+      <circle id="eye" class="cls-1" cx="92.62" cy="133.01" r="14.73"/>
+      <circle id="eye-2" data-name="eye" class="cls-1" cx="545.3" cy="133.01" r="14.73"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 205.74 303.22">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f6c7ca;
+      }
+
+      .cls-2 {
+        fill: #fdf3be;
+      }
+
+      .cls-3 {
+        fill: #533ed6;
+      }
+
+      .cls-4 {
+        fill: #2e6bf6;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g id="goat_hat_group">
+      <g id="goat">
+        <ellipse class="cls-2" cx="102.7" cy="172.53" rx="60.59" ry="82.95"/>
+        <ellipse class="cls-2" cx="102.7" cy="261.65" rx="14.68" ry="41.57"/>
+        <rect class="cls-3" x="85.35" y="229.08" width="34.69" height="10.46" rx="5.23" ry="5.23"/>
+        <g>
+          <path class="cls-2" d="M62.8,110.4L0,173.2h0c35.86,3.01,65.81-26.95,62.8-62.8h0Z"/>
+          <path class="cls-2" d="M142.93,110.4l62.8,62.8h0c-35.86,3.01-65.81-26.95-62.8-62.8h0Z"/>
+        </g>
+        <polygon class="cls-2" points="78.58 102.32 11.57 74.12 59.57 122.75 78.58 102.32"/>
+        <polygon class="cls-2" points="126.81 102.32 193.82 74.12 145.82 122.75 126.81 102.32"/>
+        <circle class="cls-1" cx="70.14" cy="173" r="15.21"/>
+        <circle class="cls-1" cx="135.25" cy="173" r="15.21"/>
+        <rect class="cls-3" x="60.95" y="169.04" width="18.38" height="7.92"/>
+        <rect class="cls-3" x="126.06" y="169.04" width="18.38" height="7.92"/>
+      </g>
+      <g id="goat_hat">
+        <rect class="cls-3" x="45.07" y="104.87" width="115.25" height="13.62"/>
+        <rect class="cls-3" x="65.05" width="75.29" height="104.87"/>
+        <rect class="cls-4" x="65.05" y="81.02" width="75.29" height="23.85"/>
+      </g>
+    </g>
+  </g>
+</svg>

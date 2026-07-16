@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 198.68 226.36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #769ef9;
+      }
+
+      .cls-2 {
+        fill: #fdf3be;
+      }
+
+      .cls-3 {
+        fill: #533ed6;
+      }
+
+      .cls-4 {
+        fill: #050505;
+      }
+
+      .cls-5 {
+        fill: #2e6bf6;
+      }
+
+      .cls-6 {
+        fill: #f6c744;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g id="pigeon_hat_group">
+      <g id="pigeon">
+        <path class="cls-1" d="M188.68,144.96v81.4H25.88v-81.4c0-44.96,36.44-81.4,81.4-81.4s81.4,36.44,81.4,81.4Z"/>
+        <polygon class="cls-6" points="130.88 180.74 107.28 204.34 83.68 180.74 130.88 180.74"/>
+        <circle class="cls-2" cx="54.73" cy="137.61" r="38.85"/>
+        <circle class="cls-4" cx="54.73" cy="137.61" r="32.82"/>
+        <circle class="cls-2" cx="159.83" cy="137.61" r="38.85"/>
+        <circle class="cls-4" cx="159.83" cy="137.61" r="32.82"/>
+      </g>
+      <g id="pigeon_hat">
+        <path class="cls-5" d="M51.76,77.66v14.1H0c0-7.79,6.31-14.1,14.1-14.1h37.66Z"/>
+        <path class="cls-3" d="M107.28,6.69c-38.58,0-69.86,31.28-69.86,69.86v15.21h139.72v-15.21c0-38.58-31.28-69.86-69.86-69.86ZM113.02,77.66c0-14.29,11.58-25.88,25.88-25.88s25.88,11.59,25.88,25.88h-51.76Z"/>
+        <rect class="cls-5" x="113.02" y="77.66" width="51.76" height="14.1"/>
+        <circle class="cls-5" cx="107.28" cy="6.69" r="6.69"/>
+      </g>
+    </g>
+  </g>
+</svg>
