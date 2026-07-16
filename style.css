@@ -77,7 +77,7 @@ html, body {
   cursor: pointer;
   pointer-events: auto;
   font: 24px Arial, sans-serif;
-  color: #222;
+  color: var(--nav-color, #222);
 }
 
 #nav [data-action="back"] {

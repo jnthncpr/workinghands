@@ -12,6 +12,7 @@ const FOODS = [
 
 export class HungryBaby {
   static label = 'Hungry Baby';
+  static navColor = '#fdf3be';
 
   constructor(container, { onComplete }) {
     this.container = container;

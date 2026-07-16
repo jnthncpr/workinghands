@@ -17,6 +17,7 @@ export class Sequencer {
     this.stage.className = ''; // each game's mount() adds its own class; start every game with a clean slate
     this.index = Math.max(0, Math.min(index, this.games.length - 1));
     const GameClass = this.games[this.index];
+    this.nav.style.setProperty('--nav-color', GameClass.navColor || '#222');
     this.current = new GameClass(this.stage, { onComplete: () => this.next() });
     this.current.mount();
     this.updateNav();
