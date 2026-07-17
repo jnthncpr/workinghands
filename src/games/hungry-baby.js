@@ -4,7 +4,7 @@ import { bindDraggable } from '../drag.js';
 import { showPostScreen } from '../post-screen.js';
 
 const POST_BACKGROUND = '#56bd7e';
-const POST_ICON = '\u{1F44C}';
+const POST_ICON = '\u{1F90C}';
 const POST_MESSAGE = 'nice job! you spoil him!';
 const POST_NEXT_ACTIVE_ICON = 'Assets/SVG/next_active_green.svg';
 
