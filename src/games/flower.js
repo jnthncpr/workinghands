@@ -1,4 +1,10 @@
 import { loadInlineSVG } from '../svg-loader.js';
+import { showPostScreen } from '../post-screen.js';
+
+const POST_BACKGROUND = '#533ed6';
+const POST_ICON = '\u{1F44C}';
+const POST_MESSAGE = 'wonderful! he loves you not!';
+const POST_NEXT_ACTIVE_ICON = 'Assets/SVG/next_active_purple.svg';
 
 const FLOWER_VIEWBOX = { width: 358.08, height: 617.2 };
 const PETAL_KEYS = ['petal1', 'petal2', 'petal3', 'petal4', 'petal5', 'petal6'];
@@ -46,6 +52,24 @@ export class Flower {
     this.fallTimer = null;
     this.regrowTimer = null;
     this.renderScale = 1;
+    this.postCleanup = null;
+  }
+
+  showPost() {
+    window.removeEventListener('resize', this.resizeHandler);
+    clearTimeout(this.fallTimer);
+    clearTimeout(this.regrowTimer);
+    for (const unbind of this.unbindFns) unbind();
+    this.unbindFns = [];
+
+    this.container.classList.remove('flower-game');
+    this.postCleanup = showPostScreen(this.container, {
+      background: POST_BACKGROUND,
+      icon: POST_ICON,
+      message: POST_MESSAGE,
+      nextActiveIcon: POST_NEXT_ACTIVE_ICON,
+      onNext: () => this.onComplete(),
+    });
   }
 
   async mount() {
@@ -249,7 +273,7 @@ export class Flower {
     this.pluckedCount++;
     if (this.pluckedCount >= PETAL_KEYS.length) {
       this.won = true;
-      setTimeout(() => this.onComplete(), PETAL_FADE_MS);
+      setTimeout(() => this.showPost(), PETAL_FADE_MS);
     }
   }
 
@@ -348,6 +372,7 @@ export class Flower {
     window.removeEventListener('resize', this.resizeHandler);
     clearTimeout(this.fallTimer);
     clearTimeout(this.regrowTimer);
+    this.postCleanup?.();
     for (const unbind of this.unbindFns) unbind();
   }
 }
