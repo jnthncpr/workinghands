@@ -411,3 +411,42 @@ html, body {
   color: #fdf3be;
   white-space: nowrap;
 }
+
+.flower-game {
+  position: absolute;
+  inset: 0;
+  background: #2e6bf6;
+  overflow: hidden;
+}
+
+.flower-game__caption {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font: 24px Arial, sans-serif;
+  text-align: center;
+  color: #fdf3be;
+  white-space: nowrap;
+}
+
+.flower-game__flower {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 0);
+  touch-action: none;
+}
+
+.flower-game__flower svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.flower-game__stem-hitbox,
+.flower-game__petal-hitbox {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  touch-action: none;
+}
