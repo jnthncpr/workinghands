@@ -2,6 +2,7 @@ import { loadInlineSVG } from '../svg-loader.js';
 
 const SMILEY_VIEWBOX = { width: 637.92, height: 445.49 };
 const MAX_ROTATION = 180; // degrees, either direction
+const HITBOX_PADDING_PX = 50; // flat screen-pixel buffer, doesn't scale with the smiley
 
 export class Smiley {
   static label = 'Smiley';
@@ -14,6 +15,7 @@ export class Smiley {
     this.resizeHandler = () => {
       this.sizeSmiley();
       this.positionCaption();
+      this.sizeMouthHitbox();
     };
 
     this.rotation = 0; // persists across separate 2-finger gestures — never resets on release
@@ -41,7 +43,18 @@ export class Smiley {
 
     const bbox = this.mouth.getBBox();
     this.pivot = { x: bbox.x + bbox.width / 2, y: bbox.y + bbox.height / 2 };
+    // A rotating shape's on-screen footprint changes with its angle (wide
+    // and short at 0deg, tall and narrow at 90deg, etc). Sizing the hitbox
+    // to the bbox's diagonal — a circle of that radius fully contains the
+    // shape at every possible rotation — means it never needs to track the
+    // mouth's rotation, only the pivot point, which never moves.
+    this.mouthDiagonal = Math.sqrt(bbox.width ** 2 + bbox.height ** 2);
     this.applyRotation();
+
+    const hitbox = document.createElement('div');
+    hitbox.className = 'smiley-game__mouth-hitbox';
+    smileyEl.appendChild(hitbox);
+    this.hitbox = hitbox;
 
     const handleDown = (event) => {
       this.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
@@ -61,19 +74,20 @@ export class Smiley {
       this.gestureBaseline = null;
     };
 
-    this.mouth.addEventListener('pointerdown', handleDown);
-    this.mouth.addEventListener('pointermove', handleMove);
-    this.mouth.addEventListener('pointerup', handleUp);
-    this.mouth.addEventListener('pointercancel', handleUp);
+    hitbox.addEventListener('pointerdown', handleDown);
+    hitbox.addEventListener('pointermove', handleMove);
+    hitbox.addEventListener('pointerup', handleUp);
+    hitbox.addEventListener('pointercancel', handleUp);
     this.unbindFns.push(() => {
-      this.mouth.removeEventListener('pointerdown', handleDown);
-      this.mouth.removeEventListener('pointermove', handleMove);
-      this.mouth.removeEventListener('pointerup', handleUp);
-      this.mouth.removeEventListener('pointercancel', handleUp);
+      hitbox.removeEventListener('pointerdown', handleDown);
+      hitbox.removeEventListener('pointermove', handleMove);
+      hitbox.removeEventListener('pointerup', handleUp);
+      hitbox.removeEventListener('pointercancel', handleUp);
     });
 
     this.sizeSmiley();
     this.positionCaption();
+    this.sizeMouthHitbox();
     window.addEventListener('resize', this.resizeHandler);
   }
 
@@ -131,6 +145,20 @@ export class Smiley {
     const containerTop = this.container.getBoundingClientRect().top;
     const midpoint = (smileyTop - containerTop) / 2;
     this.caption.style.top = `${midpoint}px`;
+  }
+
+  // Centers a square hitbox on the mouth's pivot, sized to its rendered
+  // diagonal (so it covers the mouth at any rotation) plus a flat 50px
+  // screen-pixel buffer that stays constant regardless of the smiley's
+  // current scale.
+  sizeMouthHitbox() {
+    const renderedWidth = this.smileyEl.getBoundingClientRect().width;
+    const scale = renderedWidth / SMILEY_VIEWBOX.width;
+    const sizePx = this.mouthDiagonal * scale + HITBOX_PADDING_PX * 2;
+    this.hitbox.style.width = `${sizePx}px`;
+    this.hitbox.style.height = `${sizePx}px`;
+    this.hitbox.style.left = `${(this.pivot.x / SMILEY_VIEWBOX.width) * 100}%`;
+    this.hitbox.style.top = `${(this.pivot.y / SMILEY_VIEWBOX.height) * 100}%`;
   }
 
   destroy() {

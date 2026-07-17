@@ -395,6 +395,12 @@ html, body {
   display: block;
 }
 
+.smiley-game__mouth-hitbox {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  touch-action: none;
+}
+
 .smiley-game__caption {
   position: absolute;
   left: 50%;
