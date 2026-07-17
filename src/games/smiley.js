@@ -1,4 +1,10 @@
 import { loadInlineSVG } from '../svg-loader.js';
+import { showPostScreen } from '../post-screen.js';
+
+const POST_BACKGROUND = '#56bd7e';
+const POST_ICON = '\u{1F91F}';
+const POST_MESSAGE = '"Throw away holiness and wisdom,\nand people will be a hundred times happier."\n– Lao Tzu';
+const POST_NEXT_ACTIVE_ICON = 'Assets/SVG/next_active_green.svg';
 
 const SMILEY_VIEWBOX = { width: 637.92, height: 445.49 };
 const MAX_ROTATION = 180; // degrees, either direction
@@ -22,6 +28,22 @@ export class Smiley {
     this.activePointers = new Map(); // pointerId -> {x, y}
     this.gestureBaseline = null; // {ids, angle, rotation} captured when a 2-finger grab starts
     this.won = false;
+    this.postCleanup = null;
+  }
+
+  showPost() {
+    window.removeEventListener('resize', this.resizeHandler);
+    for (const unbind of this.unbindFns) unbind();
+    this.unbindFns = [];
+
+    this.container.classList.remove('smiley-game');
+    this.postCleanup = showPostScreen(this.container, {
+      background: POST_BACKGROUND,
+      icon: POST_ICON,
+      message: POST_MESSAGE,
+      nextActiveIcon: POST_NEXT_ACTIVE_ICON,
+      onNext: () => this.onComplete(),
+    });
   }
 
   async mount() {
@@ -131,7 +153,7 @@ export class Smiley {
 
     if (!this.won && Math.abs(this.rotation) >= MAX_ROTATION) {
       this.won = true;
-      this.onComplete();
+      this.showPost();
     }
   }
 
@@ -179,6 +201,7 @@ export class Smiley {
 
   destroy() {
     window.removeEventListener('resize', this.resizeHandler);
+    this.postCleanup?.();
     for (const unbind of this.unbindFns) unbind();
   }
 }
