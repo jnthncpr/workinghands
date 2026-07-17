@@ -341,3 +341,35 @@ html, body {
   height: 35%;
   transform: translate(-50%, -50%);
 }
+
+.bear-scratch {
+  position: absolute;
+  inset: 0;
+  background: #533ed6;
+  overflow: hidden;
+}
+
+.bear-scratch__bear {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  touch-action: none;
+}
+
+.bear-scratch__bear svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.bear-scratch__caption {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font: 24px Arial, sans-serif;
+  text-align: center;
+  color: #fdf3be;
+  white-space: nowrap;
+}
