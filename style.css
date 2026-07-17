@@ -373,3 +373,35 @@ html, body {
   color: #fdf3be;
   white-space: nowrap;
 }
+
+.smiley-game {
+  position: absolute;
+  inset: 0;
+  background: #eb4125;
+  overflow: hidden;
+}
+
+.smiley-game__smiley {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  touch-action: none;
+}
+
+.smiley-game__smiley svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.smiley-game__caption {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font: 24px Arial, sans-serif;
+  text-align: center;
+  color: #fdf3be;
+  white-space: nowrap;
+}

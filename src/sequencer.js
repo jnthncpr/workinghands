@@ -5,6 +5,7 @@ export class Sequencer {
     this.games = games;
     this.index = 0;
     this.current = null;
+    this.mounting = false;
   }
 
   start() {
@@ -12,6 +13,12 @@ export class Sequencer {
   }
 
   mount(index) {
+    // Guards against a real race: mount() is async per-game (awaits SVG
+    // loads), and without this a rapid-tap on back/skip could clear the
+    // stage for a new game while the previous game's mount() is still
+    // mid-flight — it would then keep appending its own content onto the
+    // new game's stage once its awaited fetch finally resolves. Disabling
+    // nav until the current mount settles removes the window for that.
     this.current?.destroy?.();
     this.stage.replaceChildren();
     this.stage.className = ''; // each game's mount() adds its own class; start every game with a clean slate
@@ -19,8 +26,13 @@ export class Sequencer {
     const GameClass = this.games[this.index];
     this.nav.style.setProperty('--nav-color', GameClass.navColor || '#222');
     this.current = new GameClass(this.stage, { onComplete: () => this.next() });
-    this.current.mount();
+
+    this.mounting = true;
     this.updateNav();
+    Promise.resolve(this.current.mount()).then(() => {
+      this.mounting = false;
+      this.updateNav();
+    });
   }
 
   next() {
@@ -36,7 +48,7 @@ export class Sequencer {
   }
 
   updateNav() {
-    this.nav.querySelector('[data-action="back"]').disabled = this.index === 0;
-    this.nav.querySelector('[data-action="skip"]').disabled = this.index === this.games.length - 1;
+    this.nav.querySelector('[data-action="back"]').disabled = this.mounting || this.index === 0;
+    this.nav.querySelector('[data-action="skip"]').disabled = this.mounting || this.index === this.games.length - 1;
   }
 }
