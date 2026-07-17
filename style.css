@@ -454,3 +454,57 @@ html, body {
   transform: translate(-50%, -50%);
   touch-action: none;
 }
+
+.hats-game {
+  position: absolute;
+  inset: 0;
+  background: #f6c744;
+  overflow: hidden;
+}
+
+.hats-game__caption {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font: 24px Arial, sans-serif;
+  text-align: center;
+  color: #222;
+  white-space: nowrap;
+}
+
+.hats-game__row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 150px; /* leaves room above for the nav + caption, ahead of the hats' load position */
+  display: flex;
+}
+
+.hats-game__column {
+  flex: 1;
+  position: relative;
+  height: 100%;
+}
+
+.hats-game__hat,
+.hats-game__animal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  touch-action: none;
+}
+
+.hats-game__hat svg,
+.hats-game__animal svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hats-game__hitbox {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  touch-action: none;
+}
