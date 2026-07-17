@@ -20,7 +20,7 @@ export class Smiley {
 
     this.rotation = 0; // persists across separate 2-finger gestures — never resets on release
     this.activePointers = new Map(); // pointerId -> {x, y}
-    this.gestureBaseline = null; // {angle, rotation} captured when a 2-finger grab starts
+    this.gestureBaseline = null; // {ids, angle, rotation} captured when a 2-finger grab starts
     this.won = false;
   }
 
@@ -63,15 +63,16 @@ export class Smiley {
     const handleMove = (event) => {
       if (!this.activePointers.has(event.pointerId)) return;
       this.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-      this.updateGesture();
+      this.updateGesture(event.pointerId);
     };
     const handleUp = (event) => {
       this.activePointers.delete(event.pointerId);
-      // Dropping below 2 fingers ends this gesture instance, but this.rotation
-      // is untouched — the next 2-finger grab starts a fresh angle reference
-      // measured from wherever rotation currently sits, so play can resume
-      // exactly where it left off.
-      this.gestureBaseline = null;
+      // Only end the gesture if the finger that lifted was actually one of
+      // the pinned pair driving it — an unrelated 3rd finger (e.g. a resting
+      // thumb) lifting shouldn't interrupt an ongoing rotation.
+      if (this.gestureBaseline?.ids.includes(event.pointerId)) {
+        this.gestureBaseline = null;
+      }
     };
 
     hitbox.addEventListener('pointerdown', handleDown);
@@ -93,22 +94,37 @@ export class Smiley {
 
   maybeStartGesture() {
     if (this.activePointers.size < 2 || this.gestureBaseline) return;
-    const [p1, p2] = [...this.activePointers.values()].slice(0, 2);
+    // Pin the gesture to these two specific pointer IDs. If a 3rd finger
+    // touches down later, it's ignored entirely rather than silently
+    // swapped in for one of the original two if that one lifts.
+    const [[id1, p1], [id2, p2]] = [...this.activePointers.entries()].slice(0, 2);
     this.gestureBaseline = {
+      ids: [id1, id2],
       angle: Math.atan2(p2.y - p1.y, p2.x - p1.x),
       rotation: this.rotation,
     };
   }
 
-  updateGesture() {
-    if (this.activePointers.size < 2) return;
+  updateGesture(movedPointerId) {
     if (!this.gestureBaseline) {
       this.maybeStartGesture();
       return;
     }
-    const [p1, p2] = [...this.activePointers.values()].slice(0, 2);
+    // Ignore movement from any finger that isn't part of the pinned pair.
+    if (!this.gestureBaseline.ids.includes(movedPointerId)) return;
+    const [id1, id2] = this.gestureBaseline.ids;
+    const p1 = this.activePointers.get(id1);
+    const p2 = this.activePointers.get(id2);
+
     const currentAngle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
-    const deltaDeg = (currentAngle - this.gestureBaseline.angle) * (180 / Math.PI);
+    // atan2 returns (-180, 180], so a naive subtraction can misread a real,
+    // tiny rotation as a ~360 degree jump the instant the finger pair's
+    // angle crosses that boundary (e.g. baseline at 179deg, next frame at
+    // -179deg is actually a 2deg move, not -358deg). Taking the shortest
+    // signed angular difference via atan2(sin, cos) avoids that discontinuity.
+    const rawDiff = currentAngle - this.gestureBaseline.angle;
+    const wrappedDiff = Math.atan2(Math.sin(rawDiff), Math.cos(rawDiff));
+    const deltaDeg = wrappedDiff * (180 / Math.PI);
     const next = this.gestureBaseline.rotation + deltaDeg;
     this.rotation = Math.max(-MAX_ROTATION, Math.min(MAX_ROTATION, next));
     this.applyRotation();
