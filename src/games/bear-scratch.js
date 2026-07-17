@@ -1,5 +1,11 @@
 import { loadInlineSVG } from '../svg-loader.js';
 import { ComboTimer } from '../combo-timer.js';
+import { showPostScreen } from '../post-screen.js';
+
+const POST_BACKGROUND = '#2e6bf6';
+const POST_ICON = '\u{1F44D}';
+const POST_MESSAGE = 'great! fun fact: bears are flat footed!';
+const POST_NEXT_ACTIVE_ICON = 'Assets/SVG/next_active_blue.svg';
 
 const BEAR_VIEWBOX = { width: 704.07, height: 774.61 };
 const GRACE_MS = 1000; // window to bridge between scratch strokes without going idle
@@ -23,6 +29,7 @@ export class BearScratch {
     this.dropTimer = null;
     this.isScratching = null; // face state; null so the first call always applies
     this.isDropped = null; // head-position state
+    this.postCleanup = null;
     this.resizeHandler = () => {
       this.sizeBear();
       this.positionCaption();
@@ -33,7 +40,25 @@ export class BearScratch {
       winMs: WIN_MS,
       onSustainStart: () => this.startScratching(),
       onSustainEnd: () => this.stopScratching(),
-      onWin: () => this.onComplete(),
+      onWin: () => this.showPost(),
+    });
+  }
+
+  showPost() {
+    window.removeEventListener('resize', this.resizeHandler);
+    clearTimeout(this.moveDebounce);
+    clearTimeout(this.bootstrapIdleTimer);
+    clearTimeout(this.dropTimer);
+    for (const unbind of this.unbindFns) unbind();
+    this.unbindFns = [];
+
+    this.container.classList.remove('bear-scratch');
+    this.postCleanup = showPostScreen(this.container, {
+      background: POST_BACKGROUND,
+      icon: POST_ICON,
+      message: POST_MESSAGE,
+      nextActiveIcon: POST_NEXT_ACTIVE_ICON,
+      onNext: () => this.onComplete(),
     });
   }
 
@@ -162,6 +187,7 @@ export class BearScratch {
     clearTimeout(this.bootstrapIdleTimer);
     clearTimeout(this.dropTimer);
     this.combo.destroy();
+    this.postCleanup?.();
     for (const unbind of this.unbindFns) unbind();
   }
 }
