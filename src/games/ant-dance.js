@@ -22,7 +22,7 @@ const SHARPS = [
 const DANCE_FRAMES = ['Assets/SVG/ant_dance1.svg', 'Assets/SVG/ant_dance2.svg'];
 const REST_FRAME = 'Assets/SVG/ant_rest.svg';
 const GRACE_MS = 1000; // window to bridge between chords without resetting the combo
-const WIN_MS = 10000; // total combo time to win
+const WIN_MS = 5000; // total combo time to win
 const DANCE_FRAME_MS = 220;
 
 export class AntDance {

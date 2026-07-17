@@ -94,7 +94,7 @@ export class BearScratch {
     // every later one goes through ComboTimer normally via the debounce
     // above.
     this.bootstrapIdleTimer = setTimeout(() => {
-      if (this.combo.comboStart === null) this.stopScratching();
+      if (this.combo.activeSince === null) this.stopScratching();
     }, GRACE_MS);
 
     this.sizeBear();
