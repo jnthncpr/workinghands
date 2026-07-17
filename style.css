@@ -442,6 +442,10 @@ html, body {
   width: 100%;
   height: 100%;
   display: block;
+  /* SVG roots clip to their viewBox by default - without this, a petal
+     drifting past that boundary gets cut off even though the transform
+     driving it is perfectly correct. */
+  overflow: visible;
 }
 
 .flower-game__stem-hitbox,
