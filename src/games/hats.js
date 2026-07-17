@@ -9,6 +9,8 @@ const ANIMALS = [
 const CONTAINER_WIDTH_FRACTION = 0.7; // fraction of a column's width each hat/animal window fills
 const HITBOX_PADDING_PX = 40;
 const ANIMAL_LOAD_FRACTION = 0.82; // animals start ~18% closer to center than the full clamp distance - on-phone testing found them starting too low otherwise
+const SNAP_FRACTION = 0.25; // once both are within this fraction of D from dead center, they snap the rest of the way together - reaching the exact clamp boundary with two fingers at once may not be physically achievable for every player
+const SNAP_MS = 150;
 
 export class Hats {
   static label = 'Hats';
@@ -115,7 +117,7 @@ export class Hats {
     const pair = this.pairs[key];
 
     const hatDown = (event) => {
-      if (pair.hatPointerId !== null) return;
+      if (pair.won || pair.hatPointerId !== null) return;
       pair.hatPointerId = event.pointerId;
       pair.hatLastClientY = event.clientY;
       this.maybeStartPinch(key);
@@ -132,7 +134,7 @@ export class Hats {
     };
 
     const animalDown = (event) => {
-      if (pair.animalPointerId !== null) return;
+      if (pair.won || pair.animalPointerId !== null) return;
       pair.animalPointerId = event.pointerId;
       pair.animalLastClientY = event.clientY;
       this.maybeStartPinch(key);
@@ -185,6 +187,10 @@ export class Hats {
 
   updatePinch(key) {
     const pair = this.pairs[key];
+    // Once snapped, a pair is locked in place - a finger left down through
+    // the snap (it happens mid-drag, before anyone's necessarily lifted)
+    // shouldn't be able to pull it back apart with further movement.
+    if (pair.won) return;
     if (!pair.pinchBaseline) {
       this.maybeStartPinch(key);
       return;
@@ -196,9 +202,15 @@ export class Hats {
     // only ever meet exactly in the middle, per Jonathan's spec.
     pair.hatOffset = Math.max(-pair.D, Math.min(0, pair.pinchBaseline.hatOffset + hatDelta));
     pair.animalOffset = Math.max(0, Math.min(pair.D, pair.pinchBaseline.animalOffset + animalDelta));
+
+    const snapThreshold = pair.D * SNAP_FRACTION;
+    if (Math.abs(pair.hatOffset) <= snapThreshold && Math.abs(pair.animalOffset) <= snapThreshold) {
+      this.snapTogether(key);
+      return;
+    }
+
     this.applyOffset(key, 'hat');
     this.applyOffset(key, 'animal');
-    this.checkWin(key);
   }
 
   applyOffset(key, which) {
@@ -208,9 +220,22 @@ export class Hats {
     el.style.transform = `translate(-50%, calc(-50% + ${offset}px))`;
   }
 
-  checkWin(key) {
+  // Getting exactly to the clamp boundary with two fingers moving at once
+  // may not be physically achievable for every player, so once both are
+  // close enough, finish the job for them with a quick snap into place.
+  snapTogether(key) {
     const pair = this.pairs[key];
-    if (pair.won || pair.hatOffset !== 0 || pair.animalOffset !== 0) return;
+    pair.hatOffset = 0;
+    pair.animalOffset = 0;
+    pair.hatEl.style.transition = `transform ${SNAP_MS}ms ease-out`;
+    pair.animalEl.style.transition = `transform ${SNAP_MS}ms ease-out`;
+    this.applyOffset(key, 'hat');
+    this.applyOffset(key, 'animal');
+    setTimeout(() => {
+      pair.hatEl.style.transition = '';
+      pair.animalEl.style.transition = '';
+    }, SNAP_MS);
+
     pair.won = true;
     if (Object.values(this.pairs).every((p) => p.won)) {
       this.onComplete();
