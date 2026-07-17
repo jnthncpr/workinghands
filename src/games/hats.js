@@ -1,4 +1,12 @@
 import { loadInlineSVG } from '../svg-loader.js';
+import { showPostScreen } from '../post-screen.js';
+
+const POST_BACKGROUND = '#2e6bf6';
+const POST_ICON = '\u{270C}';
+const POST_MESSAGE = 'aye nice work, magic fingers! play again?';
+const POST_NEXT_REST_ICON = 'Assets/SVG/home_play.svg';
+const POST_NEXT_ACTIVE_ICON = 'Assets/SVG/home_play_blue.svg';
+const POST_DELAY_MS = 1000; // lets the player see the fully-assembled animals before the success screen takes over
 
 const ANIMALS = [
   { key: 'goat', path: 'Assets/SVG/goat_hat_group.svg' },
@@ -21,10 +29,28 @@ export class Hats {
     this.onComplete = onComplete;
     this.unbindFns = [];
     this.pairs = {};
+    this.postCleanup = null;
+    this.postTimer = null;
     this.resizeHandler = () => {
       this.sizeAll();
       this.positionCaption();
     };
+  }
+
+  showPost() {
+    window.removeEventListener('resize', this.resizeHandler);
+    for (const unbind of this.unbindFns) unbind();
+    this.unbindFns = [];
+
+    this.container.classList.remove('hats-game');
+    this.postCleanup = showPostScreen(this.container, {
+      background: POST_BACKGROUND,
+      icon: POST_ICON,
+      message: POST_MESSAGE,
+      nextRestIcon: POST_NEXT_REST_ICON,
+      nextActiveIcon: POST_NEXT_ACTIVE_ICON,
+      onNext: () => this.onComplete(),
+    });
   }
 
   async mount() {
@@ -238,7 +264,7 @@ export class Hats {
 
     pair.won = true;
     if (Object.values(this.pairs).every((p) => p.won)) {
-      this.onComplete();
+      this.postTimer = setTimeout(() => this.showPost(), POST_DELAY_MS);
     }
   }
 
@@ -319,6 +345,8 @@ export class Hats {
 
   destroy() {
     window.removeEventListener('resize', this.resizeHandler);
+    clearTimeout(this.postTimer);
+    this.postCleanup?.();
     for (const unbind of this.unbindFns) unbind();
   }
 }

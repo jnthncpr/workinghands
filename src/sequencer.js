@@ -1,8 +1,9 @@
 export class Sequencer {
-  constructor({ stage, nav, games }) {
+  constructor({ stage, nav, games, onFinish }) {
     this.stage = stage;
     this.nav = nav;
     this.games = games;
+    this.onFinish = onFinish;
     this.index = 0;
     this.current = null;
     this.mounting = false;
@@ -36,7 +37,13 @@ export class Sequencer {
   }
 
   next() {
-    if (this.index + 1 < this.games.length) this.mount(this.index + 1);
+    if (this.index + 1 < this.games.length) {
+      this.mount(this.index + 1);
+    } else {
+      this.current?.destroy?.();
+      this.current = null;
+      this.onFinish?.();
+    }
   }
 
   back() {

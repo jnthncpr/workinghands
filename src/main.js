@@ -78,6 +78,11 @@ const sequencer = new Sequencer({
   stage,
   nav,
   games: [AntDance, HungryBaby, BearScratch, Smiley, Flower, Hats],
+  onFinish: () => {
+    stage.hidden = true;
+    nav.hidden = true;
+    home.hidden = false;
+  },
 });
 
 playButton.addEventListener('click', () => {
