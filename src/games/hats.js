@@ -16,7 +16,7 @@ const ANIMALS = [
 
 const CONTAINER_WIDTH_FRACTION = 0.7; // fraction of a column's width each hat/animal window fills
 const HITBOX_PADDING_PX = 40;
-const ANIMAL_LOAD_FRACTION = 0.82; // animals start ~18% closer to center than the full clamp distance - on-phone testing found them starting too low otherwise
+const LOAD_FRACTION = 0.75; // both hat and animal start 25% closer to center than the full clamp distance - Jonathan's hand-sized reach was too far for his mom's
 const SNAP_FRACTION = 0.25; // once both are within this fraction of D from dead center, they snap the rest of the way together - reaching the exact clamp boundary with two fingers at once may not be physically achievable for every player
 const SNAP_MS = 150;
 
@@ -283,13 +283,13 @@ export class Hats {
       const wasAtLoad =
         !isFirstSizing &&
         pair.pinchBaseline === null &&
-        pair.hatOffset === -pair.D &&
-        pair.animalOffset === pair.D * ANIMAL_LOAD_FRACTION;
+        pair.hatOffset === -pair.D * LOAD_FRACTION &&
+        pair.animalOffset === pair.D * LOAD_FRACTION;
       pair.D = newD;
 
       if (isFirstSizing || wasAtLoad) {
-        pair.hatOffset = -newD;
-        pair.animalOffset = newD * ANIMAL_LOAD_FRACTION;
+        pair.hatOffset = -newD * LOAD_FRACTION;
+        pair.animalOffset = newD * LOAD_FRACTION;
       } else {
         pair.hatOffset = Math.max(-newD, Math.min(0, pair.hatOffset));
         pair.animalOffset = Math.max(0, Math.min(newD, pair.animalOffset));
