@@ -232,7 +232,6 @@ html, body {
 .post-screen__message {
   margin: 0;
   font: 24px Arial, sans-serif;
-  white-space: pre-line;
 }
 
 .post-screen__next {

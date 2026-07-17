@@ -3,7 +3,7 @@ import { showPostScreen } from '../post-screen.js';
 
 const POST_BACKGROUND = '#56bd7e';
 const POST_ICON = '\u{1F91F}';
-const POST_MESSAGE = '"Throw away holiness and wisdom\nand people will be a hundred times happier."\n– Lao Tzu';
+const POST_MESSAGE = '"Throw away holiness and wisdom and people will be a hundred times happier." – Lao Tzu';
 const POST_NEXT_ACTIVE_ICON = 'Assets/SVG/next_active_green.svg';
 
 const SMILEY_VIEWBOX = { width: 637.92, height: 445.49 };
