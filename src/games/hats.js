@@ -8,6 +8,7 @@ const ANIMALS = [
 
 const CONTAINER_WIDTH_FRACTION = 0.7; // fraction of a column's width each hat/animal window fills
 const HITBOX_PADDING_PX = 40;
+const ANIMAL_LOAD_FRACTION = 0.82; // animals start ~18% closer to center than the full clamp distance - on-phone testing found them starting too low otherwise
 
 export class Hats {
   static label = 'Hats';
@@ -228,12 +229,16 @@ export class Hats {
     for (const { key } of ANIMALS) {
       const pair = this.pairs[key];
       const isFirstSizing = pair.D === null;
-      const wasAtLoad = !isFirstSizing && pair.pinchBaseline === null && pair.hatOffset === -pair.D && pair.animalOffset === pair.D;
+      const wasAtLoad =
+        !isFirstSizing &&
+        pair.pinchBaseline === null &&
+        pair.hatOffset === -pair.D &&
+        pair.animalOffset === pair.D * ANIMAL_LOAD_FRACTION;
       pair.D = newD;
 
       if (isFirstSizing || wasAtLoad) {
         pair.hatOffset = -newD;
-        pair.animalOffset = newD;
+        pair.animalOffset = newD * ANIMAL_LOAD_FRACTION;
       } else {
         pair.hatOffset = Math.max(-newD, Math.min(0, pair.hatOffset));
         pair.animalOffset = Math.max(0, Math.min(newD, pair.animalOffset));

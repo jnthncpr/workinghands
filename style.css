@@ -496,6 +496,10 @@ html, body {
   touch-action: none;
 }
 
+.hats-game__hat {
+  z-index: 1; /* hats render above the animals as they converge, rather than being hidden behind them */
+}
+
 .hats-game__hat svg,
 .hats-game__animal svg {
   width: 100%;
